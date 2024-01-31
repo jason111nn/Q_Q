@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./img/資產 1.png">
+    <title>Grid of Squares</title>
+    <style>
+        body {
+            width: 1920px;
+            height: 1080px;
+            background-size: cover;
+        }
+
+        .square {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            background-color: #fff;
+            /* Set the default background color of the square, modify as needed */
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var squareCountX = 1920 / 60;
+            var squareCountY = 1080 / 60;
+            var isMouseDown = false;
+
+            for (var i = 0; i < squareCountX; i++) {
+                for (var j = 0; j < squareCountY; j++) {
+                    var random = Math.floor(Math.random() * 2);
+                    if (random == 0) {
+                        var square = $("<img>").addClass("square").attr("src", "./img/rock.png")
+                    } else if (random == 1) {
+                        var square = $("<img>").addClass("square").attr("src", "./img/dirt.png")
+                    }
+                    square.css({
+                        left: i * 60 + "px",
+                        top: j * 60 + "px",
+                        opacity: 1
+                    });
+
+                    square.on("mousedown", function (e) {
+                        e.preventDefault(); // Prevent the default action (text selection)
+                        isMouseDown = true;
+                        animateSquareOpacity($(this), -0.2);
+                    });
+
+                    square.on("mouseup", function () {
+                        isMouseDown = false;
+                    });
+
+                    square.on("mouseenter", function () {
+                        if (isMouseDown) {
+                            animateSquareOpacity($(this), -0.2);
+                        }
+                    });
+
+                    if (opacity = 0) {
+                        square.css("background-color", "rgba(250, 235, 215, 0)")
+                    } else {
+                        square.css("background-color", "#fff")
+                    }
+                    $('body').append(square); // Append the square to the body
+                }
+            }
+
+            // Keyboard event listener
+            $(document).keydown(function (event) {
+                switch (event.key) {
+                    case "1":
+                        $(".square").css("opacity", "-=0.2");
+                        break;
+
+                    case "Enter":
+                        $(".square").css("opacity", "0");
+                        for (var i = 0; i < squareCountX; i++) {
+                            for (var j = 0; j < squareCountY; j++) {
+                                var random = Math.floor(Math.random() * 2);
+                                if (random == 0) {
+                                    var square = $("<img>").addClass("square").attr("src", "./rock.png");
+                                } else if (random == 1) {
+                                    var square = $("<img>").addClass("square").attr("src", "./dirt.png");
+                                }
+                                square.css({
+                                    left: i * 60 + "px",
+                                    top: j * 60 + "px",
+                                    opacity: 1
+                                });
+
+                                square.on("mousedown", function (e) {
+                                    e.preventDefault(); // Prevent the default action (text selection)
+                                    isMouseDown = true;
+                                    animateSquareOpacity($(this), -0.2);
+                                });
+
+                                square.on("mouseup", function () {
+                                    isMouseDown = false;
+                                });
+
+                                square.on("mouseenter", function () {
+                                    if (isMouseDown) {
+                                        animateSquareOpacity($(this), -0.2);
+                                    }
+                                });
+
+                                $('body').append(square); // Append the square to the body
+                            }
+                        }
+                        break;
+                }
+            });
+
+            function animateSquareOpacity(element, value) {
+                element.animate({
+                    opacity: `-=0.2`
+                }, 300); // 调整持续时间（以毫秒为单位）如有需要
+            }
+        });
+    </script>
+</body>
+
+</html>
